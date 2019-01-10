@@ -10,6 +10,7 @@ abstract class Model
     public const TABLE = ''; //Статическое переменная
     public $id;
 
+    abstract  public function getModelName();
     public static function findAll()
     { //статический метод - вызываемый без создания экземпляра класса, т.е. метод без $this
         $db = new Db();

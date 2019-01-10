@@ -27,9 +27,12 @@ class Db
     {
         $sth = $this->dbh->prepare($sql);
         $sth->execute($data);
-        $data = $sth->fetchAll();
+        return $sth->fetchAll(\PDO::FETCH_CLASS, $class); //сразу из базы в массив объектов заданного класса
 
-        $ret = [];
+       /*
+       $data = $sth->fetchAll();
+       //обход получаемой даты из fetchAll() без параметров
+       $ret = [];
 
         foreach ($data as $row) {
             $item = new $class;
@@ -41,6 +44,6 @@ class Db
             }
             $ret[] = $item;
         }
-        return $ret;
+        return $ret;*/
     }
 }

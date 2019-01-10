@@ -14,5 +14,9 @@ class Article extends Model
     public $title;
     public $content;
 
+    public function getModelName()
+    {
+        return 'Новость';
+    }
 
 }
