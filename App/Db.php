@@ -12,6 +12,7 @@ namespace App;
 class Db
 {
     protected $dbh;
+
     public function __construct()
     {
         $config = (include __DIR__ . '/../config.php')['db'];
@@ -22,10 +23,24 @@ class Db
         );
     }
 
-    public function query($sql, $data=[])
+    public function query($sql, $data = [], $class)
     {
         $sth = $this->dbh->prepare($sql);
         $sth->execute($data);
-        return $sth->fetchAll();
+        $data = $sth->fetchAll();
+
+        $ret = [];
+
+        foreach ($data as $row) {
+            $item = new $class;
+            foreach ($row as $key => $val) {
+                if (is_numeric($key)) {
+                      continue;
+                }
+                $item->$key = $val;
+            }
+            $ret[] = $item;
+        }
+        return $ret;
     }
 }

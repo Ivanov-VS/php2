@@ -1,7 +1,9 @@
 <?php
 require __DIR__ . '/autoload.php';
 
-$db = new \App\Db();
-$data = $db->query('SELECT * FROM news');
+$data = \App\Models\User::findAll(); //Вызов статического метода findAll() описанного в классе Model из которого наследуются другие классы
+
+
+
 var_dump($data);
 ?>
