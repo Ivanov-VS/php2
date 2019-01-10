@@ -7,4 +7,4 @@ return [
         'user' => 'php2',
         'password' => 'trjEJF4s',
     ]
-]
+];
