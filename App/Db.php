@@ -46,4 +46,10 @@ class Db
         }
         return $ret;*/
     }
+
+    public function execute($sql, $data = [])
+    {
+        $sth = $this->dbh->prepare($sql);
+        return $sth->execute($data);
+    }
 }

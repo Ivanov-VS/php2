@@ -11,6 +11,7 @@ abstract class Model
     public $id;
 
     abstract  public function getModelName();
+
     public static function findAll()
     { //статический метод - вызываемый без создания экземпляра класса, т.е. метод без $this
         $db = new Db();
@@ -24,6 +25,27 @@ abstract class Model
             [],
             static::class
         );
+    }
+
+    public function insert()
+    {
+        $fields = get_object_vars($this); //получили все поля модели
+        $cols = [];
+        $data = [];
+        foreach ($fields as $name => $value){
+            if ('id' == $name){
+                continue;
+            }
+            $cols[] = $name; //массив для sql запроса INSERT INTO news (title,content) VALUES (:title,:content )
+            $data[':' . $name] = $value; //массив для передачи в execute
+
+        $sql ='INSERT INTO ' .
+            static::TABLE . ' (' .
+            implode(',', $cols) .
+            ') VALUES (' .
+            implode(',', array_keys($data)) . ' )' ;
+        $db = new Db();
+        $db->execute($sql, $data);
     }
 }
 
